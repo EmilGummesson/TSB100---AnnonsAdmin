@@ -1,0 +1,129 @@
+﻿@model AnnonsTjanst.ServiceReference1.Annonser
+
+@{
+    ViewBag.Title = "Detaljer";
+}
+
+<div>
+    <h4>Annons</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Vara
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.annonsNamn)
+        </dd>
+
+        <dt>
+           Beskrivning
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.beskrivning)
+        </dd>
+
+        <dt>
+            Bild
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bild)
+        </dd>
+
+        <dt>
+            Kategori
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.kategori)
+        </dd>
+
+        <dt>
+            Pris
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pris)
+        </dd>
+
+        <dt>
+            Betalningsmetod
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.betalningsmetod)
+        </dd>
+
+        <dt>
+            Ort
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ort)
+        </dd>
+
+        <dt>
+            Adress
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.adress)
+        </dd>
+
+        <dt>
+            Postnummer
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.postNr)
+        </dd>
+
+        <dt>
+            Datum
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.datum)
+        </dd>
+
+        <dt>
+            Status
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.status)
+        </dd>
+
+        <dt>
+            Köpare
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.koparID)
+        </dd>
+
+        <dt>
+            Säljare
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.saljarID)
+        </dd>
+
+        <dt>
+            AnnonsID
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.annonsID)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    <button class="btn btn-default border-dark" style="background:#3BD1FF">@Html.ActionLink("Köp", "Kop", new { id = Model.annonsID })</button>
+    <button class="btn btn-default border-dark" style="background:#3BD1FF">@Html.ActionLink("Redigera", "Redigera", new { id = Model.annonsID })</button>
+    <button class="btn btn-default border-dark" style="background:#3BD1FF">@Html.ActionLink("Tillbaka till annonserna", "Index","Home")</button>
+</p>

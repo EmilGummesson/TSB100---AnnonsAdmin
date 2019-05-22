@@ -8,17 +8,71 @@ namespace AnnonsTjanst.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+
+
+
+        public ActionResult Index(int? idin)
         {
+            if (idin == null)
+            {
+                try
+                {
+                    int id = 11;
+                    loginReferences.InloggningServiceClient logclient = new loginReferences.InloggningServiceClient();
+                    if (Session["profilId"] != null)
+                    {
+                        //Converting your session variable value to integer
+
+                        id = Convert.ToInt32(Session["profilId"]);//ut komenterad kod pga problem med sekson   Convert.ToInt32(id1.Text); ((int)Session["profilId"]);
+                        var anvendare = logclient.VisaAnvandarInfoId(id);
+                        ViewBag.medalande = anvendare.Anvandarnamn;
+                    }
+
+                }
+                catch
+                {
+
+                }
+            }
+            else
+            {
+                int id = int.Parse(idin.ToString());
+                loginReferences.InloggningServiceClient logclient = new loginReferences.InloggningServiceClient();
+                if (logclient.VerifieraInloggning(id))
+                {
+                    Session["profilId"] = id;
+                    var anvendare = logclient.VisaAnvandarInfoId(id);
+                    string test = anvendare.Anvandarnamn;
+
+                }
+            }
             ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
             return View(client.HamtaAllaAnnonser());
         }
 
-        public ActionResult About()
+        public ActionResult logain()
         {
-            ViewBag.Message = "Your application description page.";
+            loginReferences.InloggningServiceClient logclient = new loginReferences.InloggningServiceClient();
+            var test = logclient.VerifieraInloggning(1337);
 
             return View();
+        }
+        [HttpPost]
+        public ActionResult logain(string anvandarnamn, string losenord, string behorrighet)
+        {
+            if (behorrighet == null)
+            {
+                behorrighet = "standard";
+            }
+            loginReferences.InloggningServiceClient logclient = new loginReferences.InloggningServiceClient();
+            var anvinfo = logclient.LoggaIn(anvandarnamn, losenord, behorrighet);
+            if (anvinfo != null)
+            {
+
+                Session["profilId"] = anvinfo.ProfilId.ToString(); //) ["profilId"] = Convert.ToInt32(anvinfo.ProfilId.ToString());
+                Session["inlogad"] = "true";
+            }
+            return RedirectToAction("Index");
         }
 
         public ActionResult Contact()
@@ -28,37 +82,6 @@ namespace AnnonsTjanst.Controllers
             return View();
         }
 
-        public ActionResult Create()
-        {
-            ViewBag.Message = "Your contact page.";
 
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Create(ServiceReference1.Annonser annons)
-        {
-            ViewBag.Message = "Your contact page.";
-            ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
-            annons.status = "Till Salu";//ändrar status till salu
-            string result = client.SkapaAnnons(annons);
-            ViewBag.Message = result;
-            return RedirectToAction("Index");
-        }
-        public ActionResult Details(int id)
-        {
-            ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
-            var annons = client.HamtaAnnons(id);
-            return View(annons);
-        }
-        public ActionResult Kop(int id)
-        {
-            ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
-            var annons = client.HamtaAnnons(id);
-            annons.status = "Såld";//änrraas status till sold
-            client.UppdateraAnnons(annons);
-            //return RedirectToAction("http://193.10.202.73/betalningservice/Service1.svc");
-            return RedirectToAction("Index");
-        }
     }
 }

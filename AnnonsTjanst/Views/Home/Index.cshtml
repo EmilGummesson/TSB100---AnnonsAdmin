@@ -3,89 +3,111 @@
 @{
     ViewBag.Title = "Index";
 }
-
-<h2>Index</h2>
-
+<label>Total Students:</label>  @ViewBag.medalande
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <button class="btn btn-default border-dark" style="background:#3BD1FF"> @Html.ActionLink("Lägg till ny annons", "Skapa", "Annons")</button>
+    <button class="btn btn-default border-dark" style="background:#3BD1FF"> @Html.ActionLink("logain", "logain")</button>
 </p>
-@ViewBag.message
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.annonsID)
-        </th>
-        <th> 
-            @Html.DisplayNameFor(model => model.annonsNamn)
+            Vara
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.beskrivning)
+            Beskrivning
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.betalningsmetod)
+            Bild
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.bild)
+            Kategori
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.datum)
+            Pris
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.kategori)
+            Betalningsmetod
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.pris)
+            Ort
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.profilID)
+            Adress
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.status)
+            Postnummer
+        </th>
+        <th>
+            Datum
+        </th>
+        <th>
+            Status
+        </th>
+        <th>
+            Köpare
+        </th>
+        <th>
+            Säljare
+        </th>
+        <th>
+            AnnonsID
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    if (item.status != "sold")
+    @foreach (var item in Model)
     {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.annonsID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.annonsNamn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.beskrivning)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.betalningsmetod)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.bild)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.datum)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.kategori)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.pris)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.profilID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.status)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { id = item.annonsID }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
+        if (item.status != "Såld")
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.annonsNamn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.beskrivning)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.bild)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.kategori)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.pris)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.betalningsmetod)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ort)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.adress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.postNr)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.datum)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.koparID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.saljarID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.annonsID)
+                </td>
+                <td>
+                    <button class="btn btn-default border-dark" style="background:#3BD1FF"> @Html.ActionLink("Redigera", "Redigera", "Annons", new { id = item.annonsID }, null)</button>
+                    <button class="btn btn-default border-dark" style="background:#3BD1FF"> @Html.ActionLink("Detaljer", "Detaljer", "Annons", new { id = item.annonsID }, null)</button>
+                </td>
+            </tr>
+        }
     }
-}
 
 </table>
