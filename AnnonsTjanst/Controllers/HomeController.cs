@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace AnnonsTjanst.Controllers
 {
+
     public class HomeController : Controller
     {
 

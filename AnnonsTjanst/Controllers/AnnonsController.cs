@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace AnnonsTjanst.Controllers
 {
+
     public class AnnonsController : Controller
     {
         public ActionResult Skapa()
@@ -34,29 +35,7 @@ namespace AnnonsTjanst.Controllers
             var annons = client.HamtaAnnons(id);
             return View(annons);
         }
-        public ActionResult Kop(int id)
-        {
-            // Hämta annons
-            ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
-            var annons = client.HamtaAnnons(id);
-            
-
-            
-            if (Session["profilId"] != null)
-            {
-                // Ändra status till såld
-                annons.status = "Såld";
-                // Spara nuvarande användare som köpare
-                annons.koparID = Convert.ToInt32(Session["profilId"]).ToString();
-                // Spara ny info
-                client.UppdateraAnnons(annons);
-                // Skicka vidare till betalningstjänst
-                return Redirect("http://193.10.202.73/betaltjanst?AnnonsID=" + annons.annonsID.ToString() + "&ProfilID=" + annons.koparID.ToString());
-            }
-            
-            
-            return RedirectToAction("Index", "Home");
-        }
+       
         public ActionResult Redigera(int id, ServiceReference1.Annonser annonser)
         {
             ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
@@ -68,6 +47,16 @@ namespace AnnonsTjanst.Controllers
         {
             ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
             annons.kategori = Request.Form["Kategorier"].ToString();
+            var result = client.UppdateraAnnons(annons);
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult Arkivera(int id)
+        {
+            
+            ServiceReference1.Service1Client client = new ServiceReference1.Service1Client();
+            var annons = client.HamtaAnnons(id);
+            annons.status = "Arkiverad";
             var result = client.UppdateraAnnons(annons);
             return RedirectToAction("Index", "Home");
         }
