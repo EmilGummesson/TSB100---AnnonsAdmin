@@ -62,12 +62,13 @@ namespace AnnonsTjanst.Controllers
         [HttpPost]
         public ActionResult logain(string anvandarnamn, string losenord)
         {
-
+            // Här använde vi hårdkodade inloggningsuppgifter då inga uppgifter fanns för annonstjänst i inloggning.doc i Teams
+            loginReferences.InloggningServiceClient logclient = new loginReferences.InloggningServiceClient();
             bool valid = false;
             valid = System.Web.Security.FormsAuthentication.Authenticate(anvandarnamn, losenord);
             if (valid)
             {
-                System.Web.Security.FormsAuthentication.RedirectFromLoginPage(anvandarnamn,false);
+                System.Web.Security.FormsAuthentication.RedirectFromLoginPage("admin",false);
             }
             
             return RedirectToAction("Index");
