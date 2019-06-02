@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace AnnonsTjanst.Controllers
 {
-
+    [Authorize]
     public class AnnonsController : Controller
     {
         public ActionResult Skapa()
